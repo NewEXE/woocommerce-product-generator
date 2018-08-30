@@ -888,7 +888,7 @@ Vehicles';
 	 * @return int
 	 */
 	public static function get_product_count() {
-		//$counts = wp_count_posts( 'product' ); // <-- nah ... :|
+		//$counts = wp_count_posts( 'product' ); // <-- Unexpected behavior
 		global $wpdb;
 		return intval( $wpdb->get_var(
 			"SELECT count(*) FROM $wpdb->posts WHERE post_type = 'product' and post_status = 'publish'"
@@ -975,6 +975,9 @@ Vehicles';
 					update_post_meta( $post_id, '_thumbnail_id', $attachment_id );
 				}
 			}
+
+			$product = wc_get_product($post_id);
+			$product->save();
 		}
 	}
 
